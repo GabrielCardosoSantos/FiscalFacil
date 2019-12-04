@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FiscalFacil.Views.BarcodePage">
+    <Grid >
+        <forms:ZXingScannerView x:Name="scanner" Grid.Column="0" Grid.Row="0"
+                            HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"
+                            IsScanning="{Binding IsScanning}" 
+                            IsAnalyzing="{Binding IsAnalyzing}" 
+                            Result="{Binding Result, Mode=TwoWay}"
+                            ScanResultCommand="{Binding QRScanResultCommand}" />
+
+        <forms:ZXingDefaultOverlay Grid.Column="0" Grid.Row="0"
+                               TopText="{Binding TopText}" 
+                               ShowFlashButton="False"
+                               BottomText="{Binding BottomText}" 
+                               Opacity="0.9" />
+
+    </Grid>
+</ContentPage>
