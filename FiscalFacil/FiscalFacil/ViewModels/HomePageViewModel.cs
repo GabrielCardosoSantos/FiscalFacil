@@ -12,50 +12,25 @@ namespace FiscalFacil.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
+        public IPageDialogService PageDialogService { get; set; }
         public DelegateCommand QRCodeCommand { get; set; }
-        ZXingScannerPage scanPage;
-        public HomePageViewModel(INavigationService navigationService) : base(navigationService)
+        public HomePageViewModel(INavigationService navigationService, IPageDialogService pageDialogService) : base(navigationService)
         {
+            PageDialogService = pageDialogService;
             QRCodeCommand = new DelegateCommand(OpenNota);
         }
 
         private async void OpenQRCode()
         {
             await NavigationService.NavigateAsync("BarcodePage");
-
-            
-            //var customOverlay = new StackLayout
-            //{
-            //    HorizontalOptions = LayoutOptions.FillAndExpand,
-            //    VerticalOptions = LayoutOptions.FillAndExpand
-            //};
-            //var torch = new Button
-            //{
-            //    Text = "Toggle Torch"
-            //};
-            //torch.Clicked += delegate {
-            //    scanPage.ToggleTorch();
-            //};
-            //customOverlay.Children.Add(torch);
-
-            //scanPage = new ZXingScannerPage(customOverlay: customOverlay);
-            //scanPage.OnScanResult += (result) => {
-            //    scanPage.IsScanning = false;
-
-            //    Device.BeginInvokeOnMainThread(() =>
-            //    {
-            //        NavigationService.GoBackAsync();
-            //        Console.WriteLine(result.Text);
-            //        //DisplayAlert("Scanned Barcode", result.Text, "OK");
-            //    });
-            //};
-
-            //await Navigation.PushAsync(scanPage);
         }
 
-        void ZXingView_BarcodeReaded(object sender, string e)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            Console.WriteLine(e);
+            if (parameters.ContainsKey("url"))
+            {
+                await PageDialogService.DisplayAlertAsync("URL", parameters["url"].ToString(), "Cancel");
+            }
         }
 
         private void OpenNota()

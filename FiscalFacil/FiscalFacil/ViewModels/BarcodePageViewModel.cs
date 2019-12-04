@@ -11,7 +11,7 @@ namespace FiscalFacil.ViewModels
 {
     public class BarcodePageViewModel : ViewModelBase
     {
-        private bool cameraFlashLightOn = false;
+        //private bool cameraFlashLightOn = false;
         private bool _isAnalyzing = true;
         private bool _isScanning = true;
         private bool _flashButtonVisible;
@@ -83,11 +83,10 @@ namespace FiscalFacil.ViewModels
                 // Stop analysis until we navigate away so we don't keep reading barcodes
                 IsAnalyzing = false;
 
-                Console.WriteLine(Result.Text);
-                // do something with Result.Text
-
-
-                await NavigationService.GoBackAsync();
+                NavigationParameters np = new NavigationParameters();
+                np.Add("url", Result.Text);
+                
+                await NavigationService.GoBackAsync(np);
             });
         });
 
