@@ -3,6 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="FiscalFacil.Views.ProdutoPage">
-  
+             x:Class="FiscalFacil.Views.ProdutoPage"
+             BackgroundColor="DeepSkyBlue">
+
+    <Frame Padding="10" BackgroundColor="AntiqueWhite" CornerRadius="10">
+        <StackLayout Orientation="Vertical" HorizontalOptions="Center">
+            
+        </StackLayout>
+    </Frame>
+
 </ContentPage>

@@ -1,11 +1,6 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xamarin.Forms;
-using ZXing.Net.Mobile.Forms;
 
 namespace FiscalFacil.ViewModels
 {
@@ -17,8 +12,6 @@ namespace FiscalFacil.ViewModels
         private bool _flashButtonVisible;
         private string _topText = "Text";
         private string _bottomText = "Text";
-
-        ZXingScannerView _zxing = new ZXingScannerView();
 
         public string TopText
         {
@@ -80,7 +73,6 @@ namespace FiscalFacil.ViewModels
 
             Device.BeginInvokeOnMainThread(async () =>
             {
-                // Stop analysis until we navigate away so we don't keep reading barcodes
                 IsAnalyzing = false;
 
                 NavigationParameters np = new NavigationParameters();

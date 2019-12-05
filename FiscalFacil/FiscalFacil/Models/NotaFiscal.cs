@@ -1,14 +1,16 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace FiscalFacil
 {
     public class NotaFiscal
     {
-        public int Id;
-        public int IdLocal;
-        public DateTime DataEmissao;
-        public string ChaveAcesso;
-        public decimal ValorCompra;
-        public decimal ValorDesconto;
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public int IdLocal { get; set; }
+        public DateTime DataEmissao { get; set; }
+        public string ChaveAcesso { get; set; }
+        public decimal ValorCompra { get; set; }
+        public decimal ValorDesconto { get; set; }
     }
 }
