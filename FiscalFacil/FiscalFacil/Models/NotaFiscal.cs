@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 
 namespace FiscalFacil
@@ -7,6 +8,7 @@ namespace FiscalFacil
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        [ForeignKey(typeof(Local))]     
         public int IdLocal { get; set; }
         public DateTime DataEmissao { get; set; }
         public string ChaveAcesso { get; set; }

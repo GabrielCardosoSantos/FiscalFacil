@@ -4,12 +4,50 @@
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="FiscalFacil.Views.ProdutoPage"
-             BackgroundColor="DeepSkyBlue">
+             BackgroundColor="DeepSkyBlue"
+             NavigationPage.HasBackButton="True">
 
-    <Frame Padding="10" BackgroundColor="AntiqueWhite" CornerRadius="10">
-        <StackLayout Orientation="Vertical" HorizontalOptions="Center">
-            
+    <StackLayout>
+        <StackLayout Orientation="Vertical">
+            <Frame Margin="10, 10, 10, 0" CornerRadius="30">
+                <StackLayout>
+                    <Label Text="{Binding NomeMercado}" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    <Label Text="{Binding DataEmissao}" FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Frame Margin="10, 0 , 10, 0" CornerRadius="30" Visual="Material">
+                <CollectionView ItemsSource="{Binding Produtos}" IsVisible="True">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="0.1" VerticalItemSpacing="1"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalOptions="Center" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                    <ColumnDefinition Width="1.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"/>
+                                </Grid.RowDefinitions>
+                                <Label FontSize="15" Text="{Binding Produto.Descricao}" FontAttributes="Italic" Grid.Column="0" VerticalOptions="Center" Visual="Material"/>
+                                <Label FontSize="15" Text="{Binding Preco.ValorPago, StringFormat='R$ {0:N}'}" FontAttributes="Bold" Grid.Column="1" VerticalOptions="Center"/>
+                                <Label FontSize="15" Text="{Binding Preco.ValorUnidade, StringFormat='R$ {0:N}'}" FontAttributes="Bold" Grid.Column="2" VerticalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
         </StackLayout>
-    </Frame>
+
+        <StackLayout Margin="0, 0, 0, 10" Orientation="Horizontal" HorizontalOptions="Center">
+            <Button Command="{Binding SalvarCommand}" Text="Salvar" BackgroundColor="White" TextColor="Black" CornerRadius="15" Visual="Material"/>
+            <Button Command="{Binding CancelarCommand}" Text="Cancelar" BackgroundColor="White" TextColor="Black" CornerRadius="15" Visual="Material"/>
+        </StackLayout>
+    </StackLayout>
+    
+    
 
 </ContentPage>

@@ -9,6 +9,7 @@ using System.IO;
 using System;
 using SQLite;
 using FiscalFacil.Services;
+using FiscalFacil.Models;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace FiscalFacil
@@ -25,6 +26,7 @@ namespace FiscalFacil
         private static IDatabase<NotaFiscal> notaRepo;
         private static IDatabase<Produto> produtoRepo;
         private static IDatabase<Local> localRepo;
+        private static IDatabase<Preco> precoRepo;
 
 
         public static ReceitaConsumer ConsultaAPI;
@@ -39,7 +41,7 @@ namespace FiscalFacil
             InitializeComponent();
             ConsultaAPI = new ReceitaConsumer();
             Connection = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PhotoSQLite.db3"));
-            Connection.CreateTablesAsync<NotaFiscal, Produto, Local>().Wait();
+            Connection.CreateTablesAsync<NotaFiscal, Produto, Local, Preco>().Wait();
             await NavigationService.NavigateAsync("MasterPage/HomePage");
         }
 
@@ -85,6 +87,18 @@ namespace FiscalFacil
                     localRepo = new Database<Local>(Connection);
                 }
                 return localRepo;
+            }
+        }
+
+        public static IDatabase<Preco> PrecoDatabase
+        {
+            get
+            {
+                if (precoRepo == null)
+                {
+                    precoRepo = new Database<Preco>(Connection);
+                }
+                return precoRepo;
             }
         }
     }

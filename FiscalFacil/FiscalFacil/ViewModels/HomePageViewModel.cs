@@ -18,8 +18,8 @@ namespace FiscalFacil.ViewModels
         public IPageDialogService PageDialogService { get; set; }
         public DelegateCommand QRCodeCommand { get; set; }
 
-
-        public ObservableCollection<NotaFiscalModel> Notas { get; set; }
+        private ObservableCollection<NotaFiscalModel> _notas;
+        public ObservableCollection<NotaFiscalModel> Notas { get { return _notas; } set { SetProperty(ref _notas, value); } }
 
         public HomePageViewModel(INavigationService navigationService, IPageDialogService pageDialogService) : base(navigationService)
         {
@@ -32,12 +32,18 @@ namespace FiscalFacil.ViewModels
 
         private async void OpenQRCode()
         {
-            await NavigationService.NavigateAsync("BarcodePage");
+            NotaFiscalModel nota = await App.ConsultaAPI.SearchItens("https://www.sefaz.rs.gov.br/NFCE/NFCE-COM.aspx?p=43191187397865002165652070001264771004360527|2|1|1|3B9666B4B19EDA74307BAE1F059795CA425F036A");
+            NavigationParameters pairs = new NavigationParameters
+            {
+                { "nota", nota }
+            };
+            //await NavigationService.NavigateAsync("BarcodePage");
+            await NavigationService.NavigateAsync("ProdutoPage", pairs);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-
+            var notas = App.ProdutoDatabase.Get();
             if (parameters.ContainsKey("url"))
             {
                 IsBusy = true;
@@ -54,7 +60,7 @@ namespace FiscalFacil.ViewModels
             }
             else if (parameters.ContainsKey("nota"))
             {
-
+                
             }
         }
 

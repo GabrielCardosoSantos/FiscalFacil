@@ -1,22 +1,24 @@
-﻿using System;
+﻿using FiscalFacil.Models;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FiscalFacil
 {
     public class NotaFiscalModel
     {
-        private NotaFiscal Nota { get; set; }
-        private Local Local { get; set; }
-        private List<Produto> Produtos { get; set; }
+        public NotaFiscal Nota { get; set; }
+        public Local Local { get; set; }
+        public List<ProdutoModel> Produtos { get; set; }
 
         public NotaFiscalModel(NotaFiscal nota, Local local)
         {
             Nota = nota;
             Local = local;
-            Produtos = new List<Produto>();
+            Produtos = new List<ProdutoModel>();
         }
 
-        public bool AddProduto(Produto produto)
+        public bool AddProduto(ProdutoModel produto)
         {
             try
             {
@@ -29,9 +31,24 @@ namespace FiscalFacil
             }
         }
 
-        public Produto GetProduto(string nome)
+        public ProdutoModel GetProduto(string nome)
         {
-            return Produtos.Find(n => n.Descricao == nome);
+            return Produtos.Find(n => n.Produto.Descricao == nome);
+        }
+
+        public string GetDataEmissao()
+        {
+            return Nota.DataEmissao.ToString();
+        }
+
+        public string GetNomeLocal()
+        {
+            return Local.Nome;
+        }
+
+        public List<ProdutoModel> GetProdutos()
+        {
+            return Produtos;
         }
 
         public void ShowNota()
@@ -46,18 +63,23 @@ namespace FiscalFacil
             Console.WriteLine("   Lugar: " + Local.Nome);
 
             Console.WriteLine("   ------------------");
-            foreach (Produto p in Produtos)
+            foreach (ProdutoModel p in Produtos)
             {
                 //Console.WriteLine("  " + p.Id);
                 //Console.WriteLine("  " + p.IdLocal);
                 //Console.WriteLine("  " + p.IdNota);
-                Console.Write("  " + p.Descricao);
-                Console.Write("  " + p.Qtd);
-                Console.Write("  " + p.ValorPago);
-                Console.WriteLine("  " + p.ValorUnidade);
+                Console.Write("  " + p.Produto.Descricao);
+                Console.Write("  " + p.Produto.Qtd);
+                Console.Write("  " + p.Preco.ValorPago);
+                Console.WriteLine("  " + p.Preco.ValorUnidade);
             }
 
             Console.WriteLine("   ------------------");
+        }
+
+        public string GetEndereco()
+        {
+            return Local.Endereco;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using FiscalFacil.Models;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace FiscalFacil.Services
     {
         public DateTime ProcessData(string str)
         {
-            return Convert.ToDateTime(str.Remove(0, str.LastIndexOf("o: ") + 3)); ;
+            return Convert.ToDateTime(str.Remove(0, str.LastIndexOf("o: ") + 3));
         }
 
         public async Task<string> GetURLAsync(string url)
@@ -45,6 +46,7 @@ namespace FiscalFacil.Services
             NotaFiscal notaFiscal = new NotaFiscal();
             Local local = new Local();
             Produto produto = new Produto();
+            Preco preco = new Preco();
 
             url = await GetURLAsync(url);
 
@@ -83,11 +85,12 @@ namespace FiscalFacil.Services
                             produto.Descricao = value[i + 1].InnerText;
                             produto.Qtd = Convert.ToDecimal(value[i + 2].InnerText);
                             produto.TipoUnidade = value[i + 3].InnerText;
-                            produto.ValorUnidade = Convert.ToDecimal(value[i + 4].InnerText);
-                            produto.ValorPago = Convert.ToDecimal(value[i + 5].InnerText);
-
-                            notaFiscalModel.AddProduto(produto);
+                            preco.ValorUnidade = Convert.ToDecimal(value[i + 4].InnerText.Replace(',', '.'));
+                            preco.ValorPago = Convert.ToDecimal(value[i + 5].InnerText.Replace(',', '.'));
+                            preco.DataPreco = notaFiscal.DataEmissao;
+                            notaFiscalModel.AddProduto(new ProdutoModel(produto, preco));
                             produto = new Produto();
+                            preco = new Preco();
                             i++;
                         }
 
